@@ -1,4 +1,4 @@
-name: Run Tests
+name: Python CI Pipeline
 
 on:
   push:
@@ -23,8 +23,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest
+
+      - name: Build check
+        run: python -m compileall -q .
 
       - name: Run tests
         env:
           API_KEY: ${{ secrets.API_KEY }}
-        run: pytest
+        run: python -m pytest -v
